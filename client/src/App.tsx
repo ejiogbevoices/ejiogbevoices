@@ -14,6 +14,14 @@ import EldersDirectory from "./pages/EldersDirectory";
 import Playlists from "./pages/Playlists";
 import AdminDashboard from "./pages/AdminDashboard";
 import AccountSettings from "./pages/AccountSettings";
+import ReviewTasks from "./pages/ReviewTasks";
+import ConsentPanel from "./pages/ConsentPanel";
+import Collections from "./pages/Collections";
+import Analytics from "./pages/Analytics";
+import SystemEvents from "./pages/SystemEvents";
+import PlaylistDetail from "./pages/PlaylistDetail";
+import TraditionDetail from "./pages/TraditionDetail";
+import SearchResults from "./pages/SearchResults";
 
 function Router() {
   // make sure to consider if you need authentication for certain routes
@@ -28,6 +36,14 @@ function Router() {
       <Route path="/playlists" component={Playlists} />
       <Route path="/admin" component={AdminDashboard} />
       <Route path="/settings" component={AccountSettings} />
+      <Route path="/review-tasks" component={ReviewTasks} />
+      <Route path="/consent/:id" component={ConsentPanel} />
+      <Route path="/collections" component={Collections} />
+      <Route path="/analytics" component={Analytics} />
+      <Route path="/system-events" component={SystemEvents} />
+      <Route path="/playlists/:id" component={PlaylistDetail} />
+      <Route path="/traditions/:id" component={TraditionDetail} />
+      <Route path="/search" component={SearchResults} />
       <Route path="/404" component={NotFound} />
       {/* Final fallback route */}
       <Route component={NotFound} />

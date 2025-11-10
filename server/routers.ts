@@ -7,6 +7,8 @@ import { uploadRouter } from "./routers/upload";
 import { dubbingRouter } from "./routers/dubbing";
 import { eldersRouter } from "./routers/elders";
 import { playlistsRouter } from "./routers/playlists";
+import { reviewTasksRouter } from "./routers/reviewTasks";
+import { eventsRouter } from "./routers/events";
 
 export const appRouter = router({
     // if you need to use socket.io, read and register route in server/_core/index.ts, all api should start with '/api/' so that the gateway can route correctly
@@ -29,6 +31,8 @@ export const appRouter = router({
   dubbing: dubbingRouter,
   elders: eldersRouter,
   playlists: playlistsRouter,
+  reviewTasks: reviewTasksRouter,
+  events: eventsRouter,
 });
 
 export type AppRouter = typeof appRouter;
