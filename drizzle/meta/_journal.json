@@ -1,5 +1,13 @@
 {
   "version": "7",
   "dialect": "mysql",
-  "entries": []
+  "entries": [
+    {
+      "idx": 0,
+      "version": "5",
+      "when": 1762788142121,
+      "tag": "0000_lowly_hydra",
+      "breakpoints": true
+    }
+  ]
 }
