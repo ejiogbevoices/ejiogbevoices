@@ -11,6 +11,9 @@ import Upload from "./pages/Upload";
 import SignIn from "./pages/SignIn";
 import SignUp from "./pages/SignUp";
 import EldersDirectory from "./pages/EldersDirectory";
+import Playlists from "./pages/Playlists";
+import AdminDashboard from "./pages/AdminDashboard";
+import AccountSettings from "./pages/AccountSettings";
 
 function Router() {
   // make sure to consider if you need authentication for certain routes
@@ -22,6 +25,9 @@ function Router() {
       <Route path="/upload" component={Upload} />
       <Route path="/elders" component={EldersDirectory} />
       <Route path="/recordings/:id" component={RecordingDetail} />
+      <Route path="/playlists" component={Playlists} />
+      <Route path="/admin" component={AdminDashboard} />
+      <Route path="/settings" component={AccountSettings} />
       <Route path="/404" component={NotFound} />
       {/* Final fallback route */}
       <Route component={NotFound} />
