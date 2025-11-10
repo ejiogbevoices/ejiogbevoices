@@ -4,6 +4,7 @@ import { trpc } from "@/lib/trpc";
 import { AudioPlayer } from "@/components/AudioPlayer";
 import { TranscriptViewer } from "@/components/TranscriptViewer";
 import { Loader2, AlertCircle, Globe, Clock, Share2 } from "lucide-react";
+import { ShareButton } from "@/components/ShareButton";
 
 export default function RecordingDetail() {
   const params = useParams();
@@ -72,6 +73,14 @@ export default function RecordingDetail() {
               onTimeUpdate={setCurrentTime}
               onDurationChange={setDuration}
             />
+
+            {/* Share button */}
+            <div className="flex gap-2">
+              <ShareButton
+                recordingId={recording.id}
+                recordingTitle={recording.title}
+              />
+            </div>
 
             {/* Metadata */}
             <div className="grid grid-cols-2 gap-4">
