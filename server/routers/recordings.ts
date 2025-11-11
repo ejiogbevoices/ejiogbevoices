@@ -1,6 +1,9 @@
 import { z } from "zod";
 import { router, publicProcedure, protectedProcedure } from "../_core/trpc";
+import { getDb } from "../db";
+import { traditions } from "../../drizzle/schema";
 import {
+
   getRecordingById,
   getRecordingsByTradition,
   getRecordingsByElder,
@@ -20,6 +23,7 @@ import {
   getTraditionById,
 } from "../db";
 import { v4 as uuidv4 } from "uuid";
+import { eq } from "drizzle-orm";
 
 // ============================================================================
 // SCHEMA VALIDATORS
@@ -137,6 +141,16 @@ export const recordingsRouter = router({
     )
     .query(async ({ input }) => {
       return getPublicRecordings(input.limit, input.offset);
+    }),
+
+  /**
+   * Get all traditions
+   */
+  getTraditions: publicProcedure
+    .query(async () => {
+      const db = await getDb();
+      if (!db) return [];
+      return db.select().from(traditions);
     }),
 
   /**
