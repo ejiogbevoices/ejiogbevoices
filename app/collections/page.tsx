@@ -59,7 +59,7 @@ export default function CollectionsPage() {
   )
 
   const featuredCollections = filteredCollections.slice(0, 2)
-  const allBundles = filteredCollections
+  const allCollections = filteredCollections
 
   return (
     <div className="min-h-screen bg-[#0D1117] text-white">
@@ -71,7 +71,7 @@ export default function CollectionsPage() {
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
             </svg>
           </Link>
-          <h1 className="text-xl font-bold flex-1 text-center mr-10">Bundles</h1>
+          <h1 className="text-xl font-bold flex-1 text-center mr-10">Collections</h1>
         </div>
       </div>
 
@@ -81,7 +81,7 @@ export default function CollectionsPage() {
           <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400" />
           <input
             type="text"
-            placeholder="Search bundles"
+            placeholder="Search collections"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             className="w-full bg-slate-800/50 rounded-xl pl-12 pr-4 py-3.5 text-slate-300 placeholder-slate-500 border border-slate-700 focus:border-cyan-500 focus:outline-none focus:ring-1 focus:ring-cyan-500"
@@ -144,16 +144,15 @@ export default function CollectionsPage() {
           </div>
         )}
 
-        {/* All Bundles Section */}
         <div className="space-y-4">
-          <h2 className="text-xl font-bold">All Bundles</h2>
+          <h2 className="text-xl font-bold">All Collections</h2>
           <div className="space-y-3">
             {loading ? (
               <div className="text-center py-12 text-slate-400">Loading collections...</div>
-            ) : allBundles.length === 0 ? (
+            ) : allCollections.length === 0 ? (
               <div className="text-center py-12 text-slate-400">No collections found</div>
             ) : (
-              allBundles.map((collection) => (
+              allCollections.map((collection) => (
                 <Link key={collection.id} href={`/collections/${collection.id}`}>
                   <div className="flex gap-3 p-3 rounded-xl bg-slate-800/30 hover:bg-slate-800/50 transition-colors">
                     <div className="relative w-20 h-20 rounded-lg overflow-hidden flex-shrink-0">

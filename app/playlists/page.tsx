@@ -18,7 +18,7 @@ export default function PlaylistsPage() {
           <Link href="/playlists/create">
             <Button className="bg-amber-500 hover:bg-amber-600 text-slate-900 font-medium">Create New Playlist</Button>
           </Link>
-          <Link href="/recordings">
+          <Link href="/clips/create">
             <Button variant="outline" className="border-slate-600 text-slate-200 hover:bg-slate-700 bg-transparent">
               Create Clip
             </Button>

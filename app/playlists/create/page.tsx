@@ -47,11 +47,6 @@ export default function CreatePlaylistPage() {
     const {
       data: { user },
     } = await supabase.auth.getUser()
-    if (!user) {
-      alert("You must be logged in")
-      setLoading(false)
-      return
-    }
 
     const { data: playlist, error: playlistError } = await supabase
       .from("playlists")
@@ -59,7 +54,7 @@ export default function CreatePlaylistPage() {
         title,
         description,
         visibility: "private",
-        owner: user.id,
+        owner: user?.id || null, // Set owner to null if no user logged in
       })
       .select()
       .single()
