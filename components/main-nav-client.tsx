@@ -4,193 +4,108 @@ import Link from "next/link"
 import { useState } from "react"
 import Image from "next/image"
 import type { User } from "@supabase/supabase-js"
+import { Menu } from "lucide-react"
+import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
+import { Button } from "@/components/ui/button"
 
 interface MainNavClientProps {
   user: User | null
 }
 
 export function MainNavClient({ user }: MainNavClientProps) {
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+  const [open, setOpen] = useState(false)
+
+  const navigationLinks = [
+    { href: "/", label: "Home" },
+    { href: "/recordings", label: "Recordings" },
+    { href: "/collections", label: "Collections" },
+    { href: "/categories", label: "Categories" },
+    { href: "/transcription", label: "Transcription" },
+    { href: "/translations", label: "Translations" },
+    { href: "/elders", label: "Elders" },
+    { href: "/playlists", label: "Playlists" },
+    { href: "/admin", label: "Admin" },
+  ]
+
+  const userLinks = user
+    ? [
+        { href: "/account", label: "Account" },
+        { href: "/upload", label: "Upload Recording", primary: true },
+        { href: "/api/auth/signout", label: "Sign Out" },
+      ]
+    : [
+        { href: "/login", label: "Sign In" },
+        { href: "/signup", label: "Sign Up" },
+      ]
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b border-slate-700/50 bg-[#0D1117]/95 backdrop-blur-lg shadow-lg">
-      <div className="container flex h-16 items-center px-4 max-w-7xl mx-auto">
-        <Link href="/" className="flex items-center gap-3">
+    <header className="sticky top-0 z-50 w-full border-b border-slate-700/50 bg-[#0D1117]/95 backdrop-blur-lg">
+      <div className="flex h-16 items-center px-4 max-w-7xl mx-auto">
+        <Link href="/" className="flex items-center gap-2.5">
           <Image
-            src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Gemini_Generated_Image_5ixdcy5ixdcy5ixd-ufdRhB3L6T7Xd9ZXzSlKWDN1armz2I.png"
-            alt="Logo"
-            width={40}
-            height={40}
-            className="w-10 h-10"
+            src="/icon.png"
+            alt="Ejiogbe Voices"
+            width={32}
+            height={32}
+            className="w-8 h-8"
           />
-          <span className="font-serif text-xl text-amber-400 font-bold">Ejiogbe Voices</span>
+          <span className="font-serif text-lg text-amber-400 font-bold">Ejiogbe Voices</span>
         </Link>
 
-        <nav className="hidden md:flex ml-8 gap-1">
-          <Link
-            href="/recordings"
-            className="px-4 py-2 text-sm font-medium rounded-md text-cyan-400 bg-cyan-500/10 border border-cyan-500/30 transition-colors"
-          >
-            Recordings
-          </Link>
-          <Link
-            href="/collections"
-            className="px-4 py-2 text-sm font-medium rounded-md text-slate-300 hover:text-white hover:bg-slate-800/50 transition-colors"
-          >
-            Collections
-          </Link>
-          <Link
-            href="/categories"
-            className="px-4 py-2 text-sm font-medium rounded-md text-slate-300 hover:text-white hover:bg-slate-800/50 transition-colors"
-          >
-            Categories
-          </Link>
-          <Link
-            href="/transcription"
-            className="px-4 py-2 text-sm font-medium rounded-md text-slate-300 hover:text-white hover:bg-slate-800/50 transition-colors"
-          >
-            Transcription
-          </Link>
-          <Link
-            href="/translations"
-            className="px-4 py-2 text-sm font-medium rounded-md text-slate-300 hover:text-white hover:bg-slate-800/50 transition-colors"
-          >
-            Translations
-          </Link>
-          <Link
-            href="/elders"
-            className="px-4 py-2 text-sm font-medium rounded-md text-slate-300 hover:text-white hover:bg-slate-800/50 transition-colors"
-          >
-            Elders
-          </Link>
-          <Link
-            href="/playlists"
-            className="px-4 py-2 text-sm font-medium rounded-md text-slate-300 hover:text-white hover:bg-slate-800/50 transition-colors"
-          >
-            Playlists
-          </Link>
-          <Link
-            href="/admin"
-            className="px-4 py-2 text-sm font-medium rounded-md text-slate-300 hover:text-white hover:bg-slate-800/50 transition-colors"
-          >
-            Admin
-          </Link>
-        </nav>
-
-        <button
-          className="md:hidden ml-auto mr-3"
-          onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-          aria-label="Toggle mobile menu"
-        >
-          <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            {mobileMenuOpen ? (
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-            ) : (
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
-            )}
-          </svg>
-        </button>
-
-        <div className="hidden md:flex ml-auto gap-3 items-center">
-          {user && (
-            <>
-              <Link
-                href="/account"
-                className="px-4 py-2 text-sm text-slate-300 hover:text-white hover:bg-slate-800/50 rounded-md transition-colors"
+        <div className="ml-auto">
+          <Sheet open={open} onOpenChange={setOpen}>
+            <SheetTrigger asChild>
+              <Button
+                variant="ghost"
+                size="icon"
+                className="text-slate-300 hover:text-white hover:bg-slate-800/50"
+                aria-label="Open menu"
               >
-                Account
-              </Link>
-              <Link
-                href="/upload"
-                className="px-4 py-2 text-sm bg-amber-500 hover:bg-amber-600 text-slate-900 font-semibold shadow-lg shadow-amber-500/30 rounded-md transition-colors"
-              >
-                Upload
-              </Link>
-            </>
-          )}
+                <Menu className="h-6 w-6" />
+              </Button>
+            </SheetTrigger>
+            <SheetContent side="right" className="w-[280px] sm:w-[320px] bg-slate-900 border-slate-700">
+              <nav className="flex flex-col gap-6 mt-8">
+                <div className="space-y-1">
+                  <h3 className="px-3 mb-2 text-xs font-semibold text-slate-500 uppercase tracking-wider">
+                    Navigation
+                  </h3>
+                  {navigationLinks.map((link) => (
+                    <Link
+                      key={link.href}
+                      href={link.href}
+                      onClick={() => setOpen(false)}
+                      className="block px-3 py-2 text-sm font-medium text-slate-300 hover:text-white hover:bg-slate-800/50 rounded-md transition-colors"
+                    >
+                      {link.label}
+                    </Link>
+                  ))}
+                </div>
+
+                <div className="border-t border-slate-700 pt-4 space-y-1">
+                  <h3 className="px-3 mb-2 text-xs font-semibold text-slate-500 uppercase tracking-wider">
+                    {user ? "Account" : "Get Started"}
+                  </h3>
+                  {userLinks.map((link) => (
+                    <Link
+                      key={link.href}
+                      href={link.href}
+                      onClick={() => setOpen(false)}
+                      className={
+                        link.primary
+                          ? "block mx-3 px-4 py-2.5 text-sm font-semibold bg-amber-500 hover:bg-amber-600 text-slate-900 rounded-md text-center transition-colors"
+                          : "block px-3 py-2 text-sm font-medium text-slate-300 hover:text-white hover:bg-slate-800/50 rounded-md transition-colors"
+                      }
+                    >
+                      {link.label}
+                    </Link>
+                  ))}
+                </div>
+              </nav>
+            </SheetContent>
+          </Sheet>
         </div>
       </div>
-
-      {mobileMenuOpen && (
-        <div className="md:hidden border-t border-slate-700 bg-slate-900">
-          <nav className="container mx-auto px-4 py-4 space-y-2">
-            <Link
-              href="/recordings"
-              className="block px-4 py-2 text-sm text-cyan-400 bg-cyan-500/10 border border-cyan-500/30 rounded-md"
-              onClick={() => setMobileMenuOpen(false)}
-            >
-              Recordings
-            </Link>
-            <Link
-              href="/collections"
-              className="block px-4 py-2 text-sm text-slate-300 hover:bg-slate-800 rounded-md"
-              onClick={() => setMobileMenuOpen(false)}
-            >
-              Collections
-            </Link>
-            <Link
-              href="/categories"
-              className="block px-4 py-2 text-sm text-slate-300 hover:bg-slate-800 rounded-md"
-              onClick={() => setMobileMenuOpen(false)}
-            >
-              Categories
-            </Link>
-            <Link
-              href="/transcription"
-              className="block px-4 py-2 text-sm text-slate-300 hover:bg-slate-800 rounded-md"
-              onClick={() => setMobileMenuOpen(false)}
-            >
-              Transcription
-            </Link>
-            <Link
-              href="/translations"
-              className="block px-4 py-2 text-sm text-slate-300 hover:bg-slate-800 rounded-md"
-              onClick={() => setMobileMenuOpen(false)}
-            >
-              Translations
-            </Link>
-            <Link
-              href="/elders"
-              className="block px-4 py-2 text-sm text-slate-300 hover:bg-slate-800 rounded-md"
-              onClick={() => setMobileMenuOpen(false)}
-            >
-              Elders
-            </Link>
-            <Link
-              href="/playlists"
-              className="block px-4 py-2 text-sm text-slate-300 hover:bg-slate-800 rounded-md"
-              onClick={() => setMobileMenuOpen(false)}
-            >
-              Playlists
-            </Link>
-            <Link
-              href="/admin"
-              className="block px-4 py-2 text-sm text-slate-300 hover:bg-slate-800 rounded-md"
-              onClick={() => setMobileMenuOpen(false)}
-            >
-              Admin
-            </Link>
-            {user && (
-              <>
-                <Link
-                  href="/account"
-                  className="block px-4 py-2 text-sm text-slate-300 hover:bg-slate-800 rounded-md"
-                  onClick={() => setMobileMenuOpen(false)}
-                >
-                  Account
-                </Link>
-                <Link
-                  href="/upload"
-                  className="block px-4 py-2 text-sm bg-amber-500 text-slate-900 font-semibold rounded-md text-center"
-                  onClick={() => setMobileMenuOpen(false)}
-                >
-                  Upload Recording
-                </Link>
-              </>
-            )}
-          </nav>
-        </div>
-      )}
     </header>
   )
 }

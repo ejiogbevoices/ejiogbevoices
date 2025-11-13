@@ -4,6 +4,7 @@ import { Input } from "@/components/ui/input"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import Link from "next/link"
 import Image from "next/image"
+import { formatRecordingSource } from "@/lib/utils/recordings"
 
 export default async function RecordingsPage() {
   const supabase = await getServerClient()
@@ -141,7 +142,7 @@ export default async function RecordingsPage() {
                   <h3 className="font-serif text-lg font-bold text-white line-clamp-2 group-hover:text-cyan-400 transition-colors">
                     {recording.title || "Untitled Recording"}
                   </h3>
-                  <p className="text-sm text-slate-400">{recording.elders?.name || "Unknown Elder"}</p>
+                  <p className="text-sm text-slate-400">{formatRecordingSource(recording)}</p>
                   <div className="flex flex-wrap gap-1.5 pt-2">
                     {recording.recording_categories && (
                       <span className="px-2 py-1 text-xs rounded-md bg-amber-500/20 text-amber-300 border border-amber-500/30 font-medium">

@@ -3,6 +3,7 @@ import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
+import { formatRecordingSource } from "@/lib/utils/recordings"
 
 export default async function TranscriptionPage() {
   const supabase = await getServerClient()
@@ -11,7 +12,8 @@ export default async function TranscriptionPage() {
     .from("recordings")
     .select(`
       *,
-      elders (id, name)
+      elders (id, name),
+      traditions (id, name)
     `)
     .order("created_at", { ascending: false })
 
@@ -138,7 +140,7 @@ export default async function TranscriptionPage() {
               <Link key={recording.id} href={`/transcription/${recording.id}`}>
                 <div className="bg-slate-800 border border-slate-700 rounded-lg p-4 hover:border-cyan-500/50 hover:shadow-lg hover:shadow-cyan-500/20 transition-all">
                   <h3 className="font-serif text-lg font-bold text-white mb-2">{recording.title}</h3>
-                  <p className="text-sm text-slate-400">{recording.elders?.name || "Unknown Elder"}</p>
+                  <p className="text-sm text-slate-400">{formatRecordingSource(recording)}</p>
                 </div>
               </Link>
             ))

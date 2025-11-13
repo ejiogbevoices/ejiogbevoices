@@ -1,6 +1,7 @@
 import Link from "next/link"
 import Image from "next/image"
 import { getServerClient } from "@/lib/supabase/serverClient"
+import { formatRecordingSource } from "@/lib/utils/recordings"
 
 export default async function HomePage() {
   const supabase = await getServerClient()
@@ -51,11 +52,11 @@ export default async function HomePage() {
             </div>
           )}
 
-          <div className="flex flex-col md:flex-row items-center gap-12 md:gap-16">
+          <div className="flex flex-col md:flex-row items-center gap-6 md:gap-8">
             {/* Logo */}
             <div className="flex-shrink-0">
               <Image
-                src="/images/gemini-generated-image-5ixdcy5ixdcy5ixd.png"
+                src="/icon.png"
                 alt="Ejiogbe Voices Logo"
                 width={320}
                 height={320}
@@ -139,7 +140,7 @@ export default async function HomePage() {
                     <h3 className="font-serif text-lg font-bold text-white line-clamp-2 text-balance group-hover:text-cyan-400 transition-colors">
                       {recording.title || "Untitled Recording"}
                     </h3>
-                    <p className="text-sm text-slate-400">{recording.elders?.name || "Unknown Elder"}</p>
+                    <p className="text-sm text-slate-400">{formatRecordingSource(recording)}</p>
 
                     <div className="flex items-center gap-2 text-xs text-slate-500">
                       {recording.language?.name && <span>{recording.language.name}</span>}

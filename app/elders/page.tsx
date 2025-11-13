@@ -8,7 +8,9 @@ import Image from "next/image"
 export default async function EldersPage() {
   const supabase = await getServerClient()
 
-  const { data: elders } = await supabase.from("elders").select("*").order("name", { ascending: true })
+  const { data: elders, error } = await supabase.from("elders").select("*").order("name", { ascending: true })
+  
+  console.log('[Elders Page] Query result:', { eldersCount: elders?.length, error })
 
   return (
     <div className="container mx-auto px-4 py-8 max-w-7xl">
