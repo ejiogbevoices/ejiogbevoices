@@ -1,0 +1,187 @@
+openapi: 3.0.0
+info:
+  title: Ejiogbe Voices API
+  version: 1.0.0
+  description: REST API for cultural preservation platform
+
+servers:
+  - url: https://api.ejiogbevoices.com/v1
+
+paths:
+  /recordings:
+    get:
+      summary: List recordings
+      parameters:
+        - name: lineage
+          in: query
+          schema:
+            type: string
+        - name: language
+          in: query
+          schema:
+            type: string
+        - name: tags
+          in: query
+          schema:
+            type: array
+            items:
+              type: string
+      responses:
+        '200':
+          description: List of recordings
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Recording'
+
+  /recordings/{id}:
+    get:
+      summary: Get recording by ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Recording details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Recording'
+
+  /recordings/{id}/transcripts:
+    get:
+      summary: Get transcripts for recording
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: language
+          in: query
+          schema:
+            type: string
+            enum: [original, en, pt, fr]
+      responses:
+        '200':
+          description: Transcript segments
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Transcript'
+
+  /tts/render:
+    post:
+      summary: Generate narrated overview
+      security:
+        - bearerAuth: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                text:
+                  type: string
+                voice_id:
+                  type: string
+                recording_id:
+                  type: string
+      responses:
+        '200':
+          description: TTS audio generated
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  audio_url:
+                    type: string
+                  duration_ms:
+                    type: integer
+
+  /dubbing/render:
+    post:
+      summary: Generate multi-language versions
+      security:
+        - bearerAuth: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                source_url:
+                  type: string
+                target_languages:
+                  type: array
+                  items:
+                    type: string
+      responses:
+        '200':
+          description: Dubbing complete
+
+components:
+  schemas:
+    Recording:
+      type: object
+      properties:
+        id:
+          type: string
+        title:
+          type: string
+        language:
+          type: string
+        lineage:
+          type: string
+        tags:
+          type: array
+          items:
+            type: string
+        duration_ms:
+          type: integer
+        storage_url:
+          type: string
+        elder_id:
+          type: string
+        consent_status:
+          type: string
+          enum: [pending, public, restricted]
+        published_at:
+          type: string
+          format: date-time
+
+    Transcript:
+      type: object
+      properties:
+        id:
+          type: string
+        recording_id:
+          type: string
+        segment_index:
+          type: integer
+        start_ms:
+          type: integer
+        end_ms:
+          type: integer
+        text_original:
+          type: string
+        text_en:
+          type: string
+        text_pt:
+          type: string
+        text_fr:
+          type: string
+
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
